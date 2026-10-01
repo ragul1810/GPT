@@ -1,0 +1,3 @@
+import { useState } from 'react';
+import axios from 'axios';
+export default function App(){const [prompt,setPrompt]=useState('');const [messages,setMessages]=useState([]);async function sendMessage(){if(!prompt)return;const user={role:'user',text:prompt};setMessages(p=>[...p,user]);const res=await axios.post('http://localhost:8000/chat',{message:prompt});setMessages(p=>[...p,{role:'assistant',text:res.data.response}]);setPrompt('');}return (<div><h1>Copilot</h1><input value={prompt} onChange={e=>setPrompt(e.target.value)}/><button onClick={sendMessage}>Send</button>{messages.map((m,i)=><div key={i}>{m.role}:{m.text}</div>)}</div>)}
